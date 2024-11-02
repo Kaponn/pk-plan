@@ -1,4 +1,4 @@
-export interface Teacher {
+export interface TeacherEntry {
   id: number;
   name: string;
   surname: string;
@@ -12,7 +12,7 @@ interface TimeRange {
   end: string;
 }
 
-interface WeeklyAvailability {
+export interface WeeklyAvailability {
   [day: string]: TimeRange[];
 }
 
@@ -31,7 +31,7 @@ export interface ClassType {
   numOfHours: number;
 }
 
-enum ClassTypes {
+export enum ClassTypes {
   LECTURE = 'LECTURE',
   LABORATORY = 'LABORATORY',
   COMPUTER_LABORATORY = 'COMPUTER_LABORATORY',
