@@ -7,6 +7,8 @@ import {
   TeacherEntry,
   WeeklyAvailability,
 } from '../../model/models';
+import { MatDialog } from '@angular/material/dialog';
+import { TeacherDialogComponent } from '../../dialog/teacher-dialog/teacher-dialog.component';
 
 const CLASS_TYPE_DATA: ClassType[] = [
   {
@@ -78,6 +80,8 @@ const TEACHER_DATA: TeacherEntry[] = [
   styleUrl: './teacher.component.scss',
 })
 export class TeacherComponent {
+  constructor(public dialog: MatDialog) {}
+
   displayedColumns: string[] = [
     'id',
     'name',
@@ -103,5 +107,11 @@ export class TeacherComponent {
             .join(', ')}`
       )
       .join(' | ');
+  }
+
+  addTeacher() {
+    this.dialog.open(TeacherDialogComponent, {
+      width: '400px',
+    });
   }
 }
