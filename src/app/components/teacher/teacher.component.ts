@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatTableModule } from '@angular/material/table';
 import {
   Class,
@@ -9,6 +9,9 @@ import {
 } from '../../model/models';
 import { MatDialog } from '@angular/material/dialog';
 import { TeacherDialogComponent } from '../../dialog/teacher-dialog/teacher-dialog.component';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { CommonModule } from '@angular/common';
+import { TeacherService } from '../../service/teacher.service';
 
 const CLASS_TYPE_DATA: ClassType[] = [
   {
@@ -75,13 +78,11 @@ const TEACHER_DATA: TeacherEntry[] = [
 @Component({
   selector: 'app-teacher',
   standalone: true,
-  imports: [MatTableModule],
+  imports: [CommonModule, MatTableModule, MatTooltipModule],
   templateUrl: './teacher.component.html',
   styleUrl: './teacher.component.scss',
 })
-export class TeacherComponent {
-  constructor(public dialog: MatDialog) {}
-
+export class TeacherComponent implements OnInit {
   displayedColumns: string[] = [
     'id',
     'name',
@@ -90,28 +91,60 @@ export class TeacherComponent {
     'class',
     'hours',
   ];
-  dataSource = TEACHER_DATA;
+
+  dataSource: TeacherEntry[] = TEACHER_DATA;
+
+  constructor(
+    private dialog: MatDialog,
+    private teacherService: TeacherService
+  ) {}
+
+  ngOnInit(): void {
+    this.teacherService.teachers$.subscribe((teachers) => {
+      this.dataSource = teachers;
+    });
+  }
 
   getClassNames(classes: { name: string }[]): string {
     return classes.map((c) => c.name).join(', ');
   }
 
-  getAvailability(hours: {
+  getFirstAvailableDay(hours: {
     [day: string]: { start: string; end: string }[];
-  }): string {
-    return Object.entries(hours)
-      .map(
-        ([day, times]) =>
-          `${day}: ${times
-            .map((time) => `${time.start} - ${time.end}`)
-            .join(', ')}`
-      )
-      .join(' | ');
+  }): { day: string; availability: string } | null {
+    for (const [day, times] of Object.entries(hours)) {
+      if (Array.isArray(times) && times.length > 0) {
+        const availability = times
+          .map((time) => `${time.start} - ${time.end}`)
+          .join(', ');
+        return { day, availability };
+      }
+    }
+    return null; // Gdy brak dostępności
   }
 
-  addTeacher() {
-    this.dialog.open(TeacherDialogComponent, {
-      width: '400px',
+  getAllOtherDays(hours: {
+    [day: string]: { start: string; end: string }[];
+  }): string | null {
+    const availableDays = Object.entries(hours).filter(
+      ([_, times]) => Array.isArray(times) && times.length > 0
+    );
+    return availableDays
+      .map(([day, times]) =>
+        times.map((time) => `${day}: ${time.start} - ${time.end}`).join(', ')
+      )
+      .join('; ');
+  }
+
+  openAddTeacherDialog(): void {
+    const dialogRef = this.dialog.open(TeacherDialogComponent, {
+      width: '600px',
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        // The teacher is already added in the service, no need to add here
+      }
     });
   }
 }
