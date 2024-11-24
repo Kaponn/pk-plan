@@ -1,0 +1,104 @@
+<h2 mat-dialog-title>Dodaj prowadzącego</h2>
+<mat-dialog-content>
+  <form [formGroup]="teacherForm">
+    <!-- Name -->
+    <mat-form-field appearance="fill">
+      <mat-label>Imię</mat-label>
+      <input matInput formControlName="name" placeholder="Imię" />
+      <mat-error *ngIf="teacherForm.get('name')?.hasError('required')">
+        Imię jest wymagane
+      </mat-error>
+      <mat-error *ngIf="teacherForm.get('name')?.hasError('pattern')">
+        Imię może zawierać tylko litery
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Surname -->
+    <mat-form-field appearance="fill">
+      <mat-label>Nazwisko</mat-label>
+      <input matInput formControlName="surname" placeholder="Nazwisko" />
+      <mat-error *ngIf="teacherForm.get('surname')?.hasError('required')">
+        Nazwisko jest wymagane
+      </mat-error>
+      <mat-error *ngIf="teacherForm.get('surname')?.hasError('pattern')">
+        Nazwisko może zawierać tylko litery
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Email -->
+    <mat-form-field appearance="fill">
+      <mat-label>Email</mat-label>
+      <input matInput formControlName="email" placeholder="Email" />
+      <mat-error *ngIf="teacherForm.get('email')?.hasError('required')">
+        Email jest wymagany
+      </mat-error>
+      <mat-error *ngIf="teacherForm.get('email')?.hasError('email')">
+        Nieprawidłowy format email
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Class -->
+    <!-- <mat-form-field appearance="fill">
+      <mat-label>Przedmioty</mat-label>
+      <mat-select formControlName="class" multiple>
+        <mat-option
+          *ngFor="let classOption of classOptions"
+          [value]="classOption"
+        >
+          {{ classOption.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field> -->
+
+    <!-- Availability -->
+    <h3>Dostępność</h3>
+    <div formGroupName="availability">
+      <div *ngFor="let day of daysOfWeek" class="day-container">
+        <h3>{{ day }}</h3>
+        <div
+          formArrayName="{{ day.toLowerCase() }}"
+          class="time-slot-container"
+        >
+          <div
+            *ngFor="let control of getAvailability(day).controls; let i = index"
+            class="time-slot"
+          >
+            <div [formGroupName]="i" class="time-slot-row">
+              <div class="time-input-container">
+                <input formControlName="start" placeholder="Start time" />
+                <mat-error
+                  *ngIf="control.get('start')?.hasError('invalidTime')"
+                >
+                  Invalid time format
+                </mat-error>
+              </div>
+              <div class="time-input-container">
+                <input formControlName="end" placeholder="End time" />
+                <mat-error *ngIf="control.get('end')?.hasError('invalidTime')">
+                  Invalid time format
+                </mat-error>
+              </div>
+              <button
+                class="remove-button"
+                type="button"
+                (click)="removeAvailability(day, i)"
+              >
+                Remove
+              </button>
+            </div>
+          </div>
+          <button type="button" (click)="addAvailability(day)">
+            Add Availability
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button class="mat-button" (click)="closeDialog()">Anuluj</button>
+  <button mat-raised-button class="mat-raised-button" (click)="saveTeacher()">
+    Save
+  </button>
+</mat-dialog-actions>
