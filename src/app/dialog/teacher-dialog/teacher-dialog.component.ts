@@ -1,5 +1,9 @@
-import { Component } from '@angular/core';
-import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { Component, Inject } from '@angular/core';
+import {
+  MAT_DIALOG_DATA,
+  MatDialogModule,
+  MatDialogRef,
+} from '@angular/material/dialog';
 import {
   FormBuilder,
   FormGroup,
@@ -16,6 +20,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { TeacherComponent } from '../../components/teacher/teacher.component';
 import { TeacherService } from '../../service/teacher.service';
+import { I } from '@angular/cdk/keycodes';
 
 @Component({
   standalone: true,
@@ -47,7 +52,8 @@ export class TeacherDialogComponent {
   constructor(
     private dialogRef: MatDialogRef<TeacherDialogComponent>,
     private fb: FormBuilder,
-    private teacherService: TeacherService
+    private teacherService: TeacherService,
+    @Inject(MAT_DIALOG_DATA) public data: TeacherEntry
   ) {
     this.teacherForm = this.fb.group({
       name: ['', [Validators.required, Validators.pattern(/^[A-Za-z\s]+$/)]],
@@ -59,6 +65,32 @@ export class TeacherDialogComponent {
           return acc;
         }, {} as { [key: string]: FormArray })
       ),
+    });
+
+    if (this.data) {
+      this.populateForm(this.data);
+    }
+  }
+
+  // Populate the form with existing teacher data
+  populateForm(teacher: TeacherEntry): void {
+    this.teacherForm.patchValue({
+      name: teacher.name,
+      surname: teacher.surname,
+      email: teacher.mail,
+    });
+
+    Object.keys(teacher.hours).forEach((day) => {
+      const dayAvailability = teacher.hours[day];
+      const formArray = this.getAvailability(day);
+      dayAvailability.forEach((slot) => {
+        formArray.push(
+          this.fb.group({
+            start: [slot.start, [Validators.required, this.validateTime]],
+            end: [slot.end, [Validators.required, this.validateTime]],
+          })
+        );
+      });
     });
   }
 
@@ -126,8 +158,12 @@ export class TeacherDialogComponent {
         hours: availability,
       };
 
-      // Add teacher to the list using TeacherService
-      this.teacherService.addTeacher(teacherData);
+      // Add or update teacher in the service
+      if (this.data) {
+        this.teacherService.updateTeacher(teacherData);
+      } else {
+        this.teacherService.addTeacher(teacherData);
+      }
 
       this.dialogRef.close(teacherData);
     } else {

@@ -121,3 +121,16 @@ button[type="button"]:disabled {
 .remove-button {
   margin-bottom: 5%;
 }
+
+.time-input-container {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.error-message {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  font-size: 12px; // Adjust the font size as needed
+}

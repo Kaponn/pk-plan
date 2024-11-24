@@ -12,6 +12,8 @@ import { TeacherDialogComponent } from '../../dialog/teacher-dialog/teacher-dial
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { CommonModule } from '@angular/common';
 import { TeacherService } from '../../service/teacher.service';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 
 const CLASS_TYPE_DATA: ClassType[] = [
   {
@@ -78,7 +80,13 @@ const TEACHER_DATA: TeacherEntry[] = [
 @Component({
   selector: 'app-teacher',
   standalone: true,
-  imports: [CommonModule, MatTableModule, MatTooltipModule],
+  imports: [
+    CommonModule,
+    MatTableModule,
+    MatTooltipModule,
+    MatButtonModule,
+    MatIconModule,
+  ],
   templateUrl: './teacher.component.html',
   styleUrl: './teacher.component.scss',
 })
@@ -90,9 +98,10 @@ export class TeacherComponent implements OnInit {
     'mail',
     'class',
     'hours',
+    'actions',
   ];
 
-  dataSource: TeacherEntry[] = TEACHER_DATA;
+  dataSource: TeacherEntry[] = [];
 
   constructor(
     private dialog: MatDialog,
@@ -146,5 +155,24 @@ export class TeacherComponent implements OnInit {
         // The teacher is already added in the service, no need to add here
       }
     });
+  }
+
+  openUpdateTeacherDialog(teacher: TeacherEntry): void {
+    const dialogRef = this.dialog.open(TeacherDialogComponent, {
+      width: '600px',
+      data: teacher,
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        // Update the teacher in the service
+        this.teacherService.updateTeacher(result);
+      }
+      console.log(this.dataSource);
+    });
+  }
+
+  deleteTeacher(id: number): void {
+    this.teacherService.deleteTeacher(id);
   }
 }
