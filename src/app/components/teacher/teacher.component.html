@@ -1,7 +1,9 @@
 <div class="teacher-container">
-  <button mat-raised-button color="primary" (click)="openAddTeacherDialog()">
-    Add Teacher
-  </button>
+  <div class="button-container">
+    <button mat-raised-button color="primary" (click)="openAddTeacherDialog()">
+      Add Teacher
+    </button>
+  </div>
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
     <!-- ID Column -->
     <ng-container matColumnDef="id">

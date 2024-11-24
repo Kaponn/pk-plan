@@ -17,3 +17,25 @@
     padding: 8px;
   }
 }
+
+.button-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 3px;
+
+  button {
+    padding: 6px 12px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 8px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    transition: background-color 0.3s;
+
+    &:hover {
+      background-color: #0056b3;
+    }
+  }
+}
