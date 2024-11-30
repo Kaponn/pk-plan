@@ -67,14 +67,23 @@
               <div class="time-input-container">
                 <input formControlName="start" placeholder="Start time" />
                 <mat-error
-                  *ngIf="control.get('start')?.hasError('invalidTime')"
+                  *ngIf="
+                    control.get('start')?.touched &&
+                    control.get('start')?.invalid
+                  "
+                  class="error-message"
                 >
                   Invalid time format
                 </mat-error>
               </div>
               <div class="time-input-container">
                 <input formControlName="end" placeholder="End time" />
-                <mat-error *ngIf="control.get('end')?.hasError('invalidTime')">
+                <mat-error
+                  *ngIf="
+                    control.get('end')?.touched && control.get('end')?.invalid
+                  "
+                  class="error-message"
+                >
                   Invalid time format
                 </mat-error>
               </div>

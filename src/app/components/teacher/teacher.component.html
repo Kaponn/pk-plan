@@ -1,7 +1,9 @@
 <div class="teacher-container">
-  <button mat-raised-button color="primary" (click)="openAddTeacherDialog()">
-    Add Teacher
-  </button>
+  <div class="button-container">
+    <button mat-raised-button color="primary" (click)="openAddTeacherDialog()">
+      Add Teacher
+    </button>
+  </div>
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
     <!-- ID Column -->
     <ng-container matColumnDef="id">
@@ -53,6 +55,27 @@
         <span *ngIf="!getFirstAvailableDay(teacher.hours)"
           >Brak dostępności</span
         >
+      </td>
+    </ng-container>
+
+    <!-- Actions Column -->
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef>Actions</th>
+      <td mat-cell *matCellDef="let element" class="action-column">
+        <button
+          mat-icon-button
+          color="primary"
+          (click)="openUpdateTeacherDialog(element)"
+        >
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button
+          mat-icon-button
+          color="warn"
+          (click)="deleteTeacher(element.id)"
+        >
+          <mat-icon>delete</mat-icon>
+        </button>
       </td>
     </ng-container>
 
