@@ -1,0 +1,111 @@
+<h2 mat-dialog-title>Dodaj prowadzącego</h2>
+<mat-dialog-content>
+  <form [formGroup]="classForm">
+    <mat-form-field appearance="fill">
+      <mat-label>Nazwa</mat-label>
+      <input matInput formControlName="name" placeholder="Nazwa" />
+      <mat-error *ngIf="classForm.get('name')?.hasError('required')">
+        Nazwa jest wymagana
+      </mat-error>
+      <mat-error *ngIf="classForm.get('name')?.hasError('pattern')">
+        Nazwa może zawierać tylko litery
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Semestr</mat-label>
+      <select matNativeControl formControlName="semester">
+        <option value="1">I semestr I stopnia</option>
+        <option value="2">II semestr I stopnia</option>
+        <option value="3">III semestr I stopnia</option>
+        <option value="4">IV semestr I stopnia</option>
+        <option value="5">V semestr I stopnia</option>
+        <option value="6">VI semestr I stopnia</option>
+        <option value="7">VII semestr I stopnia</option>
+        <option value="8">I semestr II stopnia</option>
+        <option value="9">II semestr II stopnia</option>
+        <option value="10">III semestr II stopnia</option>
+      </select>
+      <mat-error *ngIf="classForm.get('semester')?.hasError('required')">
+        Semestr jest wymagany
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Typ</mat-label>
+      <select matNativeControl formControlName="type">
+        <option value="Wykłąd">Wykład</option>
+        <option value="Laboratorium">Laboratorium</option>
+        <option value="Laboratorium komputerowe">
+          Laboratorium Komputerowe
+        </option>
+        <option value="Ćwiczenia">Ćwiczenia</option>
+        <option value="Seminarium">Seminarium</option>
+        <option value="Lektorat">Lektorat</option>
+      </select>
+      <mat-error *ngIf="classForm.get('type')?.hasError('required')">
+        Typ jest wymagany
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Liczba studentów</mat-label>
+      <input matInput formControlName="numOfStudents" />
+      <mat-error *ngIf="classForm.get('numOfStudents')?.hasError('required')">
+        Liczba studentów jest wymagana
+      </mat-error>
+      <mat-error *ngIf="classForm.get('groupSize')?.hasError('pattern')">
+        Liczebność grupy musi być liczbą
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Liczebność grupy</mat-label>
+      <input matInput formControlName="groupSize" />
+      <mat-error *ngIf="classForm.get('groupSize')?.hasError('pattern')">
+        Liczebność grupy musi być liczbą
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Wymagania sali</mat-label>
+      <mat-select matNativeControl multiple formControlName="roomRequirements">
+        <mat-option value="Projektor">Projektor</mat-option>
+        <mat-option value="Laboratorium komputerowe">
+          Laboratorium komputerowe
+        </mat-option>
+        <mat-option value="Tablica kredowa">Tablica kredowa</mat-option>
+        <mat-option value="Tablica na pisaki">Tablica na pisaki</mat-option>
+        <mat-option value="Tablica multimedialna">
+          Tablica multimedialna
+        </mat-option>
+        <mat-option value="Internet bezprzewodowy">
+          Internet bezprzewodowy
+        </mat-option>
+        <mat-option value="Internet przewodowy">
+          Internet przewodowy
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Liczba godzin</mat-label>
+      <input matInput formControlName="numOfHours" />
+      <mat-error *ngIf="classForm.get('numOfHours')?.hasError('required')">
+        Liczba godzin jest wymagana
+      </mat-error>
+      <mat-error *ngIf="classForm.get('numOfHours')?.hasError('pattern')">
+        Liczba godzin musi być liczbą
+      </mat-error>
+    </mat-form-field>
+
+    <mat-checkbox formControlName="isRequired">Obieralny</mat-checkbox>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button class="mat-button" (click)="closeDialog()">Anuluj</button>
+  <button mat-raised-button class="mat-raised-button" (click)="saveClass()">
+    Save
+  </button>
+</mat-dialog-actions>

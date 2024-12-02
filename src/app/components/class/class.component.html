@@ -1,1 +1,87 @@
-<p>class works!</p>
+<div class="table-container">
+  <div class="button-container">
+    <button mat-raised-button color="primary" (click)="openAddClassDialog()">
+      Add Class
+    </button>
+  </div>
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    <!-- ID Column -->
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef>ID</th>
+      <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef>Name</th>
+      <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+    </ng-container>
+
+    <!-- Surname Column -->
+    <ng-container matColumnDef="semester">
+      <th mat-header-cell *matHeaderCellDef>Semester</th>
+      <td mat-cell *matCellDef="let element">{{ element.semester }}</td>
+    </ng-container>
+
+    <!-- Email Column -->
+    <ng-container matColumnDef="type">
+      <th mat-header-cell *matHeaderCellDef>Type</th>
+      <td mat-cell *matCellDef="let element">{{ element.type }}</td>
+    </ng-container>
+
+    <!-- Email Column -->
+    <ng-container matColumnDef="numOfStudents">
+      <th mat-header-cell *matHeaderCellDef>Number of students</th>
+      <td mat-cell *matCellDef="let element">{{ element.numOfStudents }}</td>
+    </ng-container>
+
+    <!-- Email Column -->
+    <ng-container matColumnDef="groupSize">
+      <th mat-header-cell *matHeaderCellDef>Group Size</th>
+      <td mat-cell *matCellDef="let element">{{ element.groupSize }}</td>
+    </ng-container>
+
+    <!-- Email Column -->
+    <ng-container matColumnDef="roomRequirements">
+      <th mat-header-cell *matHeaderCellDef>Room Requirements</th>
+      <td mat-cell *matCellDef="let element">
+        <ng-container *ngFor="let requirement of element.roomRequirements">
+          <span>{{ requirement }}</span
+          ><br />
+        </ng-container>
+      </td>
+    </ng-container>
+
+    <!-- Email Column -->
+    <ng-container matColumnDef="numOfHours">
+      <th mat-header-cell *matHeaderCellDef>Hours</th>
+      <td mat-cell *matCellDef="let element">{{ element.numOfHours }}</td>
+    </ng-container>
+
+    <!-- Email Column -->
+    <ng-container matColumnDef="isRequired">
+      <th mat-header-cell *matHeaderCellDef>Required</th>
+      <td mat-cell *matCellDef="let element">{{ element.isRequired }}</td>
+    </ng-container>
+
+    <!-- Actions Column -->
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef>Actions</th>
+      <td mat-cell *matCellDef="let element" class="action-column">
+        <button
+          mat-icon-button
+          color="primary"
+          (click)="openUpdateClassDialog(element)"
+        >
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button color="warn" (click)="deleteClass(element.id)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+</div>

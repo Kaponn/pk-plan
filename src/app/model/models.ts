@@ -17,18 +17,15 @@ export interface WeeklyAvailability {
 }
 
 export interface Class {
+  id: number;
   name: string;
   semester: number;
-  types: ClassType[];
-  numOfStudents: number;
-  isRequired: boolean;
-}
-
-export interface ClassType {
-  groupSize: number;
   type: ClassTypes;
+  numOfStudents: number;
+  groupSize: number;
   roomRequirements: string[];
   numOfHours: number;
+  isRequired: boolean;
 }
 
 export enum ClassTypes {
@@ -38,4 +35,14 @@ export enum ClassTypes {
   PRACTICAL = 'PRACTICAL',
   SEMINARY = 'SEMINARY',
   LANGUAGE = 'LANGUAGE',
+}
+
+export enum RoomRequirements {
+  PROJECTOR = 'PROJECTOR',
+  COMPUTER_LAB = 'COMPUTER_LAB',
+  BLACKBOARD = 'BLACKBOARD',
+  WHITEBOARD = 'WHITEBOARD',
+  MULTIMEDIA_BOARD = 'MULTIMEDIA_BOARD',
+  WIRELESS_INTERNET = 'WIRELESS_INTERNET',
+  WIRED_INTERNET = 'WIRED_INTERNET',
 }
