@@ -1,0 +1,136 @@
+mat-form-field {
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+.day-container {
+  margin-bottom: 24px;
+
+  h3 {
+    font-size: 1.2em;
+    margin-top: 16px;
+    margin-bottom: 8px;
+    color: #3f51b5;
+  }
+}
+
+.time-slot-container {
+  margin-bottom: 16px;
+}
+
+.time-slot-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.time-slot {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+
+  div {
+    flex-direction: row;
+  }
+
+  input {
+    margin-right: 8px;
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+
+  button {
+    margin-left: 8px;
+    background-color: #f44336;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+
+    &:hover {
+      background-color: #d32f2f;
+    }
+  }
+
+  mat-error {
+    font-size: 0.8em;
+  }
+}
+
+mat-dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 16px;
+
+  button {
+    margin-left: 8px;
+    padding: 8px 16px;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+
+    &.mat-button {
+      background-color: #f44336;
+      color: white;
+
+      &:hover {
+        background-color: #d32f2f;
+      }
+    }
+
+    &.mat-raised-button {
+      background-color: #4caf50;
+      color: white;
+
+      &:hover {
+        background-color: #388e3c;
+      }
+    }
+  }
+}
+
+h3 {
+  margin-top: 24px;
+  margin-bottom: 8px;
+  font-size: 1.5em;
+  color: #3f51b5;
+}
+
+button[type="button"] {
+  background-color: #3f51b5;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: #303f9f;
+  }
+}
+
+button[type="button"]:disabled {
+  background-color: #9e9e9e;
+  cursor: not-allowed;
+}
+
+.remove-button {
+  margin-bottom: 5%;
+}
+
+.time-input-container {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.error-message {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  font-size: 12px; // Adjust the font size as needed
+}
