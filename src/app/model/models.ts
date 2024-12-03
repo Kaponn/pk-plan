@@ -37,7 +37,15 @@ export enum ClassTypes {
   LANGUAGE = 'LANGUAGE',
 }
 
-export enum RoomRequirements {
+export interface Room {
+  id: number;
+  buildingName: string;
+  roomNumber: string;
+  capacity: number;
+  features: RoomFeatures[];
+}
+
+export enum RoomFeatures {
   PROJECTOR = 'PROJECTOR',
   COMPUTER_LAB = 'COMPUTER_LAB',
   BLACKBOARD = 'BLACKBOARD',
