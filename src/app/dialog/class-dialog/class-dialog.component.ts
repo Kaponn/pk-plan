@@ -17,7 +17,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-import { Class, ClassTypes, RoomRequirements } from 'src/app/model/models';
+import { Class, ClassTypes, RoomFeatures } from 'src/app/model/models';
 import { ClassService } from 'src/app/service/class.service';
 
 @Component({
@@ -40,7 +40,7 @@ import { ClassService } from 'src/app/service/class.service';
 export class ClassDialogComponent {
   classForm: FormGroup;
   classTypes = ClassTypes;
-  roomRequirements = RoomRequirements;
+  roomRequirements = RoomFeatures;
 
   constructor(
     private dialogRef: MatDialogRef<ClassDialogComponent>,

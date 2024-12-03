@@ -1,0 +1,63 @@
+<h2 mat-dialog-title>Dodaj salę</h2>
+<mat-dialog-content>
+  <form [formGroup]="roomForm">
+    <mat-form-field appearance="fill">
+      <mat-label>Nazwa budynku</mat-label>
+      <input
+        matInput
+        formControlName="buildingName"
+        placeholder="Nazwa budynku"
+      />
+      <mat-error *ngIf="roomForm.get('buildingName')?.hasError('required')">
+        Nazwa budynku jest wymagana
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Numer sali</mat-label>
+      <input matInput formControlName="roomNumber" placeholder="Numer sali" />
+      <mat-error *ngIf="roomForm.get('roomNumber')?.hasError('required')">
+        Numer sali jest wymagany
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Liczba miejsc</mat-label>
+      <input matInput formControlName="capacity" placeholder="Liczba miejsc" />
+      <mat-error *ngIf="roomForm.get('capacity')?.hasError('required')">
+        Liczba miejsc jest wymagana
+      </mat-error>
+      <mat-error *ngIf="roomForm.get('capacity')?.hasError('pattern')">
+        Liczba miejsc musi być liczbą
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Właściwości</mat-label>
+      <mat-select matNativeControl multiple formControlName="features">
+        <mat-option value="Projektor">Projektor</mat-option>
+        <mat-option value="Laboratorium komputerowe">
+          Laboratorium komputerowe
+        </mat-option>
+        <mat-option value="Tablica kredowa">Tablica kredowa</mat-option>
+        <mat-option value="Tablica na pisaki">Tablica na pisaki</mat-option>
+        <mat-option value="Tablica multimedialna">
+          Tablica multimedialna
+        </mat-option>
+        <mat-option value="Internet bezprzewodowy">
+          Internet bezprzewodowy
+        </mat-option>
+        <mat-option value="Internet przewodowy">
+          Internet przewodowy
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button class="mat-button" (click)="closeDialog()">Anuluj</button>
+  <button mat-raised-button class="mat-raised-button" (click)="saveRoom()">
+    Save
+  </button>
+</mat-dialog-actions>
